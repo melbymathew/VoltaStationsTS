@@ -1,0 +1,64 @@
+type Location {
+    type: Type
+    coordinates: [Float]
+}
+type Meter {
+    id: String
+    oem: String
+    station_id: String
+    state: String
+}
+# This "Station" type can be used in other type declarations.
+type Station {
+    id: String
+    lin: String
+    name: String
+    status: String
+    location: Location
+    street_address: String
+    city: String
+    state: String
+    zip_code: String
+    pay_to_park: Boolean
+    completion_date: String
+    meters: [Meter]
+    public: Boolean
+}
+type Error {
+  errorMessage: String
+}
+type StationResponse {
+  data: [Station]
+  success: Boolean
+  error: Error
+}
+
+input StationFilter {
+    search_term: String
+    available: String
+    top: Float
+    left: Float
+    bottom: Float
+    right: Float
+    status: Status
+    limit: Int
+    offset: Int
+    order_by: String
+    sort_dir: SortDir
+}
+enum Type {
+    Point
+}
+enum Status {
+    uc
+    a
+    ns
+    d
+}
+enum SortDir {
+    asc
+    desc
+}
+type Query {
+    stations(stationFilter: StationFilter): StationResponse
+}
